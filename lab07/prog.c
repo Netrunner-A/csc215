@@ -26,28 +26,31 @@ FileStats* process_file(char* c) {
   FILE* fp;
   p = (FileStats*)calloc(sizeof(FileStats), 1);
   if(fp = fopen(c, "r")) {
-    char t;
+    char c;
     int max = 0, in = 0;
     do {
-      t = getc(fp);
-      max++;
-      if(is_letter(t)) {
-        p->letters_count++;
+      c = getc(fp);
+      if(c != EOF) {
+        result->total_chars++;
+        max++;
+      }
+      if(is_letter(c)){
+        result->letters_count++;
         if(!in) {
-          p->words_count++;
+          result->words_count++;
           in = 1;
         }
-      } else in = 0;
-      if(t == '\n' || t == EOF)
-        p->lines_count++;
-      if(t == '\n') {
-        if(p->max_line_length < max)
-          p->max_line_length = max;
-        max = 0;
       }
-    } while(c != EOF);
-    p->total_chars = ftell(fp);
+      else in = 0;
+      if(c == '\n' || c==EOF) {
+        result->lines_count++;
+        if(max > result->max_line_length)
+          result->max_line_length = max;
+        max=0;
+      }
+    } while(c != EOF)
     fclose(fp);
+
     return p;
   }
   perror("Cannt Open the file");
@@ -83,3 +86,23 @@ void write_rev(char* fn, char** strs, int nstr) {
   } else
     perror("Can't open the file");
 }
+
+/*
+  t = getc(fp);
+  max++;
+  if(is_letter(t)) {
+    p->letters_count++;
+    if(!in) {
+      p->words_count++;
+      in = 1;
+    }
+  } else in = 0;
+  if(t == '\n' || t == EOF)
+    p->lines_count++;
+  if(t == '\n') {
+    if(p->max_line_length < max)
+      p->max_line_length = max;
+    max = 0;
+  }
+} while(c != EOF);
+p->total_chars = ftell(fp);*/
