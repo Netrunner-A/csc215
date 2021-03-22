@@ -8,33 +8,26 @@ void write_rev(char* fn, char** strs, int nstr);
 int main() {
   FileStats* fsp; char** lines;
   fsp = process_file("wcs.txt");
-  /*printf the returned stats */
-  lines = get_lines("wcs.txt");
-  write_rev("wcs-rev.txt", lines, fsp->lines_count);
-  return 0;
-}
-/* define the functions
-you can write function stubs
-during development */
 
-/* returns 1 if param is a letter
-and 0 otherwise */
-int is_letter(char c) {
-  if(c >= 'a' && c <= 'z' || c >= 'A' && c<= 'Z')
-    return 1;
+  printf("Lines: %d\nWords: %d\nLetters: %d\n
+  Max_length: %d\nTotal: %d\n", fsp->lines_count, fsp->words_count, fsp->letters_count, fsp->max_line_length, fsp->total_chars );
+
+  lines = get_lines("wcs.txt");
+  /*write_rev("wcs-rev.txt", lines, fsp->lines_count);*/
   return 0;
 }
-/* takes a filename as a string param
-and returns a pointer to a FileStats
-structure, or NULL on failure */
+
+int is_letter(char c) {
+    return (c >= 'a' && c <= 'z' || c >= 'A' && c<= 'Z');
+}
+
 FileStats* process_file(char* c) {
   FileStats* p;
-  p = (FileStats*)calloc(sizeof(FileStats), 1);
-  char t;
   FILE* fp;
-  int max = 0;
+  p = (FileStats*)calloc(sizeof(FileStats), 1);
   if(fp = fopen(c, "r")) {
-    int in = 0;
+    char t;
+    int max = 0, in = 0;
     do {
       t = getc(fp);
       max++;
