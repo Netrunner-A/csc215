@@ -8,7 +8,7 @@ typedef struct Student {
 
 int main(){
 
-  int n=0, i, iMax=0;/*, tmpI;
+  int n=0, i, iMax=0;
   double max=0, tmp;
 
   do {
