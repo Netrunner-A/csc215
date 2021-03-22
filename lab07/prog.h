@@ -1,9 +1,11 @@
+
+
 typedef struct {
-int total_chars;
-int letters_count;
-int words_count;
-int lines_count;
-int max_line_length;
+  int total_chars;
+  int letters_count;
+  int words_count;
+  int lines_count;
+  int max_line_length;
 } FileStats;
 /* returns 1 if param is a letter
 and 0 otherwise */
